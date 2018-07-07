@@ -1,0 +1,6 @@
+[submodule "ed25519"]
+	path = iroha-ed25519
+	url = https://github.com/hyperledger/iroha-ed25519
+[submodule "clipp"]
+	path = clipp
+	url = https://github.com/muellan/clipp
