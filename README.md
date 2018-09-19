@@ -1,4 +1,6 @@
 # ed25519-cli
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FWarchant%2Fed25519-cli.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FWarchant%2Fed25519-cli?ref=badge_shield)
+
 
 This tool can be used to sign, verify, generate a keypair with ed25519 (both sha2 and sha3).
 
@@ -75,3 +77,6 @@ true
 $ echo "2" | ed25519-cli verify -pub 10b4b0f158afb93e3fd6111b564ad4c4054ae9a142362d8d9e05a9f2d6444530 -sig c538752e628c9ca43b3328f68afc76af40cf68732db00a8c9a885a6d41045b495ef44fb625a6742895d6819a63c254e352537998961a6802687140115811a409
 false
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FWarchant%2Fed25519-cli.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FWarchant%2Fed25519-cli?ref=badge_large)
