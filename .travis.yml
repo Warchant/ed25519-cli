@@ -1,0 +1,50 @@
+sudo: true
+language: cpp
+matrix:
+  include:
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - george-edison55/cmake-3.x
+        packages:
+        - g++-7
+        - cmake
+    env:
+    - HASH=sha3_brainhub
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - george-edison55/cmake-3.x
+        packages:
+        - g++-7
+        - libssl-dev
+        - cmake
+    env:
+    - HASH=sha2_openssl
+  - os: osx
+    osx_image: xcode8
+    env:
+    - HASH=sha3_brainhub
+install:
+- git clone https://github.com/hyperledger/iroha-ed25519;
+- export EDBUILD=/tmp/iroha-ed25519-build
+- cmake -Hiroha-ed25519 -B${EDBUILD} -DBUILD=STATIC -DHASH=${HASH} -DCMAKE_BUILD_TYPE=Release;
+- sudo cmake --build ${EDBUILD} --target install
+script:
+- cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release;
+- cmake --build build --target ed25519-cli
+before_deploy:
+- export ARTIFACT=ed25519-cli-${HASH}-${TRAVIS_OS_NAME};
+- mv build/ed25519-cli ${ARTIFACT}
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: eqbRvdjvRUtdSxX4A9qM/eRMo1Xh+AB6HzqGIth0kNuLXQNQjjtJMqBmRWSj6aRCNrPOE1IyBRSMaJ73AYH+1W0dBaslGpbY776U4CHAzwQlzF9d1SMuE1rAmBtxzTmDWWznOhuGttPHaFHpV8E+8JqVPa80JI817LlJex6JG0dScUBh2bV3bpD/1SPjBdK0YEyqeL2ikzWVX3+DOF4w6HDL/f3v5/4ex2sgvQdHF/7SyCMlTsXlKbxoV3t6QDehJ5CK2r3/E1FJqfNMIobttyBooqj+9gd2hj82AuA1xI5LnUs+0DnIQljqXyVz9iK1Q1P0Wrbw5jbBKy48bSnpP/Zi0BBG/5R13C/Dd3TXAv3Q1f1Ey2rY5de0zgtfrGyKcUwi9cz6DO1Asp83khdhbk2FA8dR0a/6IN03/chbNVy7nOLRKgDSpR7MNTLaDh60V3te30CDQy7Cx2Ah9xRDAE7vxGG4o2k29eOaOBc6r5dBG/+Mq3SgOcLFq3wwxItUxaCWiK24NtomrXoJYdq7OSm3OLBC4YPqC8g5qQY5Dz/Nb6ahDy3++01WCNEuAwfgj4HWq/jcIiQI9PTIDKlZ9LQK1rshFnoAd9y/8GMhw7H3BDGkcxLUSNFMPneAXaRCxEeB+lwYBnYD5FKoGWdr25deD/GL7K0q8BTdEItqrcs=
+  file: ${ARTIFACT}
+  on:
+    branch: master
