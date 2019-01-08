@@ -17,11 +17,12 @@ This tool can be used to sign, verify, generate a keypair with ed25519 (both sha
     ```
     
     **Note**: this will install `libed25519` with SHA3. If you need sha2 variant, then change `sha3_brainhub` to `sha2_openssl`.
-2. ```git submodule update --init```
-3. build ed25519-cli
+ 
+2. build ed25519-cli
     ```
     git clone https://github.com/Warchant/ed25519-cli
     cd ed25519-cli
+    git submodule update --init
     mkdir build
     cd build
     cmake .. -DCMAKE_BUILD_TYPE=Release
